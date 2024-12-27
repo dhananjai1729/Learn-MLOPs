@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/418561308286141237/8f1ae2fffe2e40e497eb9956f5635bc5/artifacts
+end_time: 1735028471765
+entry_point_name: ''
+experiment_id: '418561308286141237'
+lifecycle_stage: active
+run_id: 8f1ae2fffe2e40e497eb9956f5635bc5
+run_name: gaudy-flea-746
+run_uuid: 8f1ae2fffe2e40e497eb9956f5635bc5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1735028469704
+status: 3
+tags: []
+user_id: dhananjaikrishnakumarpm

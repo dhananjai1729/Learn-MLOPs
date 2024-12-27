@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Networks Explained</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            background-color: white;
+        }
+        #info {
+            position: absolute;
+            top: 20px;
+            text-align: center;
+            width: 100%;
+            font-size: 18px;
+            color: #333;
+        }
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            text-align: center;
+            width: 100%;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="info">
+        <h1>How Neural Networks Work</h1>
+        <p>Observe how input nodes, hidden layers, and output nodes interact.</p>
+    </div>
+    <div id="controls">
+        <button id="start">Start Animation</button>
+        <button id="pause">Pause Animation</button>
+        <button id="reset">Reset Animation</button>
+    </div>
+    <canvas id="nnCanvas" width="800" height="600"></canvas>
+
+    <script>
+        const canvas = document.getElementById('nnCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Neural network structure
+        const layers = [3, 5, 4, 2]; // Input, Hidden Layer 1, Hidden Layer 2, Output
+        const nodes = [];
+
+        // Initialize node positions
+        const layerSpacing = canvas.width / (layers.length + 1);
+        for (let i = 0; i < layers.length; i++) {
+            const layer = [];
+            const nodeSpacing = canvas.height / (layers[i] + 1);
+            for (let j = 0; j < layers[i]; j++) {
+                layer.push({
+                    x: (i + 1) * layerSpacing,
+                    y: (j + 1) * nodeSpacing
+                });
+            }
+            nodes.push(layer);
+        }
+
+        // Function to draw nodes
+        function drawNode(x, y, color = 'blue', label = '') {
+            ctx.beginPath();
+            ctx.arc(x, y, 15, 0, Math.PI * 2);
+            ctx.fillStyle = color;
+            ctx.fill();
+            ctx.strokeStyle = 'black';
+            ctx.stroke();
+            if (label) {
+                ctx.fillStyle = 'black';
+                ctx.font = '12px Arial';
+                ctx.fillText(label, x - 10, y + 5);
+            }
+        }
+
+        // Function to draw connections
+        function drawConnection(x1, y1, x2, y2, opacity = 0.1) {
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.strokeStyle = `rgba(0, 0, 0, ${opacity})`;
+            ctx.stroke();
+        }
+
+        // Animation state
+        let currentLayer = 0;
+        let currentNode = 0;
+        let animationFrame;
+        let isAnimating = false;
+        const animationSpeed = 500; // Slower animation speed (ms per frame)
+
+        // Animation loop
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw connections
+            for (let i = 0; i < nodes.length - 1; i++) {
+                for (let nodeA of nodes[i]) {
+                    for (let nodeB of nodes[i + 1]) {
+                        drawConnection(nodeA.x, nodeA.y, nodeB.x, nodeB.y);
+                    }
+                }
+            }
+
+            // Highlight current node
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = 0; j < nodes[i].length; j++) {
+                    const node = nodes[i][j];
+                    if (i === currentLayer && j === currentNode) {
+                        drawNode(node.x, node.y, 'orange');
+                    } else {
+                        const label = i === 0 ? `In${j + 1}` : i === nodes.length - 1 ? `Out${j + 1}` : '';
+                        drawNode(node.x, node.y, 'blue', label);
+                    }
+                }
+            }
+
+            // Move to next node
+            if (isAnimating) {
+                if (currentLayer < nodes.length - 1) {
+                    currentNode++;
+                    if (currentNode >= nodes[currentLayer].length) {
+                        currentNode = 0;
+                        currentLayer++;
+                    }
+                } else {
+                    currentLayer = 0;
+                    currentNode = 0;
+                }
+                setTimeout(() => {
+                    animationFrame = requestAnimationFrame(animate);
+                }, animationSpeed);
+            }
+        }
+
+        // Start animation
+        document.getElementById('start').addEventListener('click', () => {
+            if (!isAnimating) {
+                isAnimating = true;
+                animate();
+            }
+        });
+
+        // Pause animation
+        document.getElementById('pause').addEventListener('click', () => {
+            isAnimating = false;
+            cancelAnimationFrame(animationFrame);
+        });
+
+        // Reset animation
+        document.getElementById('reset').addEventListener('click', () => {
+            isAnimating = false;
+            cancelAnimationFrame(animationFrame);
+            currentLayer = 0;
+            currentNode = 0;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            animate();
+        });
+
+        // Initial animation state
+        animate();
+    </script>
+</body>
+</html>

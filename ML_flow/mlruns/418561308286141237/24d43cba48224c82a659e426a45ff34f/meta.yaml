@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/418561308286141237/24d43cba48224c82a659e426a45ff34f/artifacts
+end_time: 1735028483346
+entry_point_name: ''
+experiment_id: '418561308286141237'
+lifecycle_stage: active
+run_id: 24d43cba48224c82a659e426a45ff34f
+run_name: bright-dog-89
+run_uuid: 24d43cba48224c82a659e426a45ff34f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1735028481377
+status: 3
+tags: []
+user_id: dhananjaikrishnakumarpm

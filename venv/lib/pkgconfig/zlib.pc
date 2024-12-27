@@ -1,0 +1,13 @@
+prefix=/Users/dhananjaikrishnakumarpm/Documents/Courses/udemy_mlops/projects/venv
+exec_prefix=/Users/dhananjaikrishnakumarpm/Documents/Courses/udemy_mlops/projects/venv
+libdir=/Users/dhananjaikrishnakumarpm/Documents/Courses/udemy_mlops/projects/venv/lib
+sharedlibdir=/Users/dhananjaikrishnakumarpm/Documents/Courses/udemy_mlops/projects/venv/lib
+includedir=/Users/dhananjaikrishnakumarpm/Documents/Courses/udemy_mlops/projects/venv/include
+
+Name: zlib
+Description: zlib compression library
+Version: 1.2.13
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz
+Cflags: -I${includedir}
