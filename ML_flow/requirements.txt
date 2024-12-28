@@ -1,5 +1,0 @@
-ipykernel
-mlflow
-scikit-learn
-pandas
-numpy
